@@ -1,0 +1,35 @@
+
+buildscript {
+    repositories {
+        maven { url "http://repo.spring.io/libs-snapshot" }
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.0.0.RC5")
+    }
+}
+
+apply plugin: 'scala'
+apply plugin: 'spring-boot'
+
+dependencies {
+    compile "org.scala-lang:scala-library:2.10.2"
+    compile 'com.fasterxml.jackson.module:jackson-module-scala_2.10:2.3.1'
+
+    compile "org.springframework.boot:spring-boot-starter-web"
+    compile "org.springframework.boot:spring-boot-starter-data-mongodb"
+    compile "org.springframework.boot:spring-boot-starter-amqp"
+
+    testCompile "org.springframework.boot:spring-boot-starter-test"
+}
+
+
+repositories {
+    mavenCentral()
+    maven { url 'http://repo.spring.io/milestone' }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.10'
+}
+
