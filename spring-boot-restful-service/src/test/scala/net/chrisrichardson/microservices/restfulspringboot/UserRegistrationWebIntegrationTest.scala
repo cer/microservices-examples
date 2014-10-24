@@ -37,18 +37,18 @@ class UserRegistrationWebIntegrationTest {
     val request = RegistrationRequest(emailAddress, "secret")
     val response = restTemplate.postForEntity("http://localhost:8080/user", request, classOf[RegistrationResponse])
     Assert.assertEquals(HttpStatus.OK, response.getStatusCode)
-    val receivedMessages = receiver.getMessages
     eventually {
+      val receivedMessages = receiver.getMessages
       receivedMessages.find { _ contains emailAddress} match {
         case Some(_) =>
         case None =>
-          Assert.fail(receivedMessages + " expected to contain " + emailAddress)
+          Assert.fail(receivedMessages.toList + " expected to contain " + emailAddress)
       }
     }
   }
 
   def eventually(body : => Unit) : Unit =
-    for (i <- 1 to 10) {
+    for (i <- 1 to 30) {
       try {
         body
         return

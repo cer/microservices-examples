@@ -1,0 +1,13 @@
+{>"main_template" title="Registration Complete"/}
+
+{<bodyContent}
+
+<div>Thanks for signing up to have your world changed!</div>
+
+<div>An email has been sent to <span id="registeredEmailAddress">{emailAddress}</span></div>
+
+
+{/bodyContent}
+
+
+

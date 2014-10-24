@@ -1,0 +1,30 @@
+<!doctype html>
+<head>
+    <base href="{dotdots}"/>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{title}</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="webjars/bootstrap/3.1.1/css/bootstrap.css">
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<script src="webjars/jquery/2.1.0/jquery.js"></script>
+<script src="webjars/jquery-validation/1.11.1/jquery.validate.js"></script>
+<body>
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div><h2><a href="/index.html">Disrptr</a></h2></div>
+            <div>Changing what we think is the world - hell yeah!!</div>
+            <hr/>
+        </div>
+        <div class="row">
+            <div class="col-xs-offset-1 col-xs-10 col-md-offset-4 col-md-4">
+                {+bodyContent/}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
