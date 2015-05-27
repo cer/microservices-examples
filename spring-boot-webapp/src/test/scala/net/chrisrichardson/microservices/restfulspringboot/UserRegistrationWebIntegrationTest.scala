@@ -1,5 +1,7 @@
 package net.chrisrichardson.microservices.restfulspringboot
 
+import java.util.concurrent.TimeUnit
+
 import org.junit.runner.RunWith
 import org.scalatest.{BeforeAndAfterAll, FlatSpec}
 import org.scalatest.selenium.Firefox
@@ -30,7 +32,7 @@ class UserRegistrationWebIntegrationTest extends FlatSpec with Firefox with Befo
 
   def makeEmailAddress() = s"foo-${System.currentTimeMillis()}@chrisrichardson.net"
 
-  implicit val longWait = PatienceConfig(2 second, 100 milliseconds)
+  implicit val longWait = PatienceConfig(10 second, 100 milliseconds)
 
   it should "register a user" in {
     val emailAddress = makeEmailAddress()

@@ -3,8 +3,8 @@ package net.chrisrichardson.microservices.restfulspringboot.main
 import org.springframework.boot.SpringApplication
 import net.chrisrichardson.microservices.restfulspringboot.UserRegistrationConfiguration
 
-object UserRegistrationMain  {
+object UserRegistrationMain extends App {
 
-  def main(args: Array[String]) : Unit = SpringApplication.run(classOf[UserRegistrationConfiguration], args :_ *)
+  SpringApplication.run(classOf[UserRegistrationConfiguration], args: _ *)
 
 }

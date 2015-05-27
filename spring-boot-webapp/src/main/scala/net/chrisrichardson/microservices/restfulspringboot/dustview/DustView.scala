@@ -16,9 +16,11 @@ class DustView extends AbstractTemplateView {
   override def renderMergedTemplateModel(model: java.util.Map[String, Object], request: HttpServletRequest, response: HttpServletResponse) {
 
     val templateName = getUrl()
-    val file = new File(getServletContext().getRealPath("") + getUrl())
+    val file = templateName.substring("/WEB-INF/views/".length)
 
-    dustTemplateRendererHolder.get.compileTemplateFile(templateName, file)
+    dustTemplateRendererHolder.get.compileTemplate(templateName, DustTemplateRenderer.ClasspathSource("/dustjsviews/" + file))
+
+
     val output = dustTemplateRendererHolder.get.renderTemplate(templateName, toJSObject(model))
     response.getOutputStream().write(output.getBytes())
   }

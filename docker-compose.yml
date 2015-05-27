@@ -1,0 +1,36 @@
+rabbitmq:
+  image: dockerfile/rabbitmq
+  ports:
+    - "5672:5672"
+    - "15672:15672"
+mongodb:
+  image: dockerfile/mongodb
+  ports:
+    - "27017:27017"
+  command: mongod --smallfiles
+restfulservice:
+  image: java:openjdk-8u45-jdk
+  working_dir: /app
+  volumes:
+    - spring-boot-restful-service/build/libs:/app
+  command: java -jar /app/spring-boot-restful-service.jar
+  ports:
+    - "8081:8080"
+  links:
+    - rabbitmq
+    - mongodb
+  environment:
+    SPRING_DATA_MONGODB_URI: mongodb://mongodb/userregistration
+    SPRING_RABBITMQ_HOST: rabbitmq
+web:
+  image: java:openjdk-8u45-jdk
+  working_dir: /app
+  volumes:
+    - spring-boot-webapp/target:/app
+  command: java -jar /app/spring-boot-user-registration-webapp-1.0-SNAPSHOT.jar
+  ports:
+    - "8080:8080"
+  links:
+    - restfulservice
+  environment:
+    USER_REGISTRATION_URL: http://restfulservice:8080/user

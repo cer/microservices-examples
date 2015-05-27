@@ -13,6 +13,8 @@ import scala.concurrent.duration._
 
 class DustTemplateRenderer {
 
+  import DustTemplateRenderer._
+
   val logger = LoggerFactory.getLogger(getClass)
 
   logger.debug("Creating new engine!!!")
@@ -36,23 +38,10 @@ class DustTemplateRenderer {
   def compileTemplateFile(templateName : String, file : File) =
     compileTemplate(templateName, FileSource(file))
 
-  trait TemplateSource {
-    def getString : String
-  }
-
-  case class FileSource(file : File) extends TemplateSource {
-    def getString =  FileUtils.readFileToString(file)
-  }
-
-  case class ClasspathSource(resource : String) extends TemplateSource {
-    def getString =  IOUtils.toString(getClass.getResourceAsStream(resource))
-  }
-
   def compileTemplate(templateName : String, source : TemplateSource)
   { if (!loadedTemplates.contains(templateName)) {
       logger.debug("loaded template " +  templateName)
 
-      import DustTemplateRenderer._
 
       var compiledTemplate = compiledTemplates.get(templateName)
       if (compiledTemplate == null) {
@@ -96,5 +85,18 @@ class DustTemplateRenderer {
 }
 
 object DustTemplateRenderer {
+  trait TemplateSource {
+    def getString : String
+  }
+
+  case class FileSource(file : File) extends TemplateSource {
+    def getString =  FileUtils.readFileToString(file)
+  }
+
+  case class ClasspathSource(resource : String) extends TemplateSource {
+    def getString =  IOUtils.toString(getClass.getResourceAsStream(resource))
+  }
+
+
   val compiledTemplates = new ConcurrentHashMap[String, Object]()
 }
