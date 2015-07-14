@@ -3,34 +3,54 @@ rabbitmq:
   ports:
     - "5672:5672"
     - "15672:15672"
+
+eureka:
+  image: springcloud/eureka
+  ports: 
+    - "8761:8761"
+
 mongodb:
   image: dockerfile/mongodb
   ports:
     - "27017:27017"
   command: mongod --smallfiles
+
 restfulservice:
   image: java:openjdk-8u45-jdk
   working_dir: /app
   volumes:
     - spring-boot-restful-service/build/libs:/app
-  command: java -jar /app/spring-boot-restful-service.jar
+  command: java -jar /app/spring-boot-restful-service.jar --spring.profiles.active=enableEureka --eureka.client.serviceUrl.defaultZone=http://eureka:8761/eureka/
   ports:
     - "8081:8080"
   links:
     - rabbitmq
     - mongodb
+    - eureka
   environment:
     SPRING_DATA_MONGODB_URI: mongodb://mongodb/userregistration
     SPRING_RABBITMQ_HOST: rabbitmq
+    SPRING_APPLICATION_NAME: registration-service
+# For some reason this didn't work    
+#    EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE: http://eureka:8761/
+#    EUREKA_INSTANCE_NON_SECURE_PORT: 8080
+#    EUREKA_INSTANCE_NON_SECURE_PORT: 8081
+    EUREKA_INSTANCE_PREFER_IP_ADDRESS: true
+
 web:
   image: java:openjdk-8u45-jdk
   working_dir: /app
   volumes:
     - spring-boot-webapp/target:/app
-  command: java -jar /app/spring-boot-user-registration-webapp-1.0-SNAPSHOT.jar
+  command: java -jar /app/spring-boot-user-registration-webapp-1.0-SNAPSHOT.jar --spring.profiles.active=enableEureka --eureka.client.serviceUrl.defaultZone=http://eureka:8761/eureka/
   ports:
     - "8080:8080"
   links:
-    - restfulservice
+    - eureka
   environment:
-    USER_REGISTRATION_URL: http://restfulservice:8080/user
+    USER_REGISTRATION_URL: http://REGISTRATION-SERVICE/user
+    SPRING_APPLICATION_NAME: registration-web
+# For some reason this didn't work    
+#    EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE: http://eureka:8761/eureka/
+#    EUREKA_INSTANCE_NON_SECURE_PORT: 8080
+    EUREKA_INSTANCE_PREFER_IP_ADDRESS: true

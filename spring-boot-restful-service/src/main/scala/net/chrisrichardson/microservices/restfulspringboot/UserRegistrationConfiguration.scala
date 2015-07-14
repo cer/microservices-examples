@@ -1,6 +1,7 @@
 package net.chrisrichardson.microservices.restfulspringboot
 
-import org.springframework.context.annotation.{ComponentScan, Primary, Bean, Configuration}
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient
+import org.springframework.context.annotation._
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.amqp.core.TopicExchange
 import org.springframework.amqp.rabbit.core.RabbitTemplate
@@ -11,6 +12,7 @@ import net.chrisrichardson.microservices.restfulspringboot.backend.ScalaObjectMa
 @Configuration
 @EnableAutoConfiguration
 @ComponentScan
+@Import(Array(classOf[EurekaClientConfiguration]))
 class UserRegistrationConfiguration {
 
   import MessagingNames._
@@ -31,6 +33,13 @@ class UserRegistrationConfiguration {
   @Bean
   def userRegistrationsExchange() = new TopicExchange(exchangeName)
 
+
+}
+
+@Configuration
+@EnableEurekaClient
+@Profile(Array("enableEureka"))
+class EurekaClientConfiguration {
 
 }
 

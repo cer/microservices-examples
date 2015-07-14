@@ -1,17 +1,19 @@
 package net.chrisrichardson.microservices.restfulspringboot
 
-import org.springframework.context.annotation.{ComponentScan, Primary, Bean, Configuration}
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import net.chrisrichardson.microservices.restfulspringboot.backend.ScalaObjectMapper
 import net.chrisrichardson.microservices.restfulspringboot.dustview.DustViewResolver
-import org.springframework.web.client.{ResponseErrorHandler, RestTemplate}
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient
+import org.springframework.context.annotation._
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
+import org.springframework.web.client.RestTemplate
+
 import scala.collection.JavaConversions._
-import org.springframework.http.client.ClientHttpResponse
 
 @Configuration
 @EnableAutoConfiguration
 @ComponentScan
+@Import(Array(classOf[EurekaClientConfiguration]))
 class UserRegistrationConfiguration {
 
 
@@ -27,17 +29,28 @@ class UserRegistrationConfiguration {
     resolver
   }
 
+  class DummyClass {}
+
   @Bean
-  def restTemplate = {
-    val restTemplate = new RestTemplate()
+  @Profile(Array("!enableEureka"))
+  def restTemplate() = new RestTemplate()
+
+  @Bean
+  def restTemplateInitializer(restTemplate : RestTemplate) : DummyClass = {
     restTemplate.getMessageConverters foreach {
       case mc: MappingJackson2HttpMessageConverter =>
         mc.setObjectMapper(scalaObjectMapper())
       case _ =>
     }
-    restTemplate
+    new DummyClass()
   }
 
 }
 
+@Configuration
+@EnableEurekaClient
+@Profile(Array("enableEureka"))
+class EurekaClientConfiguration {
+
+}
 
