@@ -1,5 +1,5 @@
 rabbitmq:
-  image: dockerfile/rabbitmq
+  image: rabbitmq:3.5.3
   ports:
     - "5672:5672"
     - "15672:15672"
@@ -10,7 +10,7 @@ eureka:
     - "8761:8761"
 
 mongodb:
-  image: dockerfile/mongodb
+  image: mongo:3.0.4
   ports:
     - "27017:27017"
   command: mongod --smallfiles
