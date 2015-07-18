@@ -3,7 +3,7 @@ It's the example code for the article [Building microservices with Spring Boot -
 
 In order to run the tests you need RabbitMQ and MongoDB.
 An easy way to accomplish that is with Docker.
-For example, (on Mac OSX running boot2docker) these two commands will start those services and set the right environment variables.
+For example, if you have [docker-compose](https://docs.docker.com/compose/) installed (and on [boot2docker](http://boot2docker.io/) on a non-windows machine) these two commands will start those services and set the right environment variables.
 
 
     $ docker/run-dependencies.sh  
