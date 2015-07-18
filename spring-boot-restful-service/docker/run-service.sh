@@ -1,4 +1,5 @@
-docker run -d -p 8080:8080 \
--e   SPRING_DATA_MONGODB_URI=mongodb://${DOCKER_HOST_IP}/userregistration  \
--e SPRING_RABBITMQ_HOST=${DOCKER_HOST_IP} \
+docker run -d -p 8081:8080 \
+-e SPRING_DATA_MONGODB_URI  \
+-e SPRING_RABBITMQ_HOST \
+--name sb_rest_svc \
 sb_rest_svc

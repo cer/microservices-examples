@@ -20,7 +20,7 @@ class DustTemplateRenderer {
   logger.debug("Creating new engine!!!")
   val engineManager = new ScriptEngineManager()
   val engine = engineManager.getEngineByName("nashorn")
-  Assert.notNull(engine)
+  Assert.notNull(engine, "Not running Java 8")
 
   engine.eval(new InputStreamReader(classOf[DustView].getResourceAsStream("/dustjs/dust-full.js")))
   engine.eval(new InputStreamReader(classOf[DustView].getResourceAsStream("/dustjs/dust-wrapper.js")))
