@@ -31,6 +31,8 @@ dependencies {
 
 //    compile 'org.springframework.cloud:spring-cloud-starter-config'
     compile 'org.springframework.cloud:spring-cloud-starter-eureka'
+    compile "io.springfox:springfox-swagger2:2.1.2"
+    compile 'io.springfox:springfox-swagger-ui:2.1.2'
 
     testCompile "org.springframework.boot:spring-boot-starter-test"
 }
