@@ -30,7 +30,7 @@ And, send a registration request using:
 
     $ ./stop-service.sh
 
-The next step is to build and test the web application.
+The next step is to [build and test the web application](../spring-boot-webapp).
 
     
 
