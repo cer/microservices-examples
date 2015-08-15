@@ -15,11 +15,11 @@ import scala.concurrent.duration._
 @RunWith(classOf[JUnitRunner])
 class UserRegistrationWebIntegrationTest extends FlatSpec with Firefox with BeforeAndAfterAll with MyPages {
 
-  val sa = new SpringApplication(classOf[UserRegistrationTestConfiguration])
-  // sa.setAdditionalProfiles("test")
-  val ctx = sa.run()
-
-  // var server = ctx.getBean(classOf[EmbeddedServletContainer])
+  override def beforeAll {
+    val sa = new SpringApplication(classOf[UserRegistrationTestConfiguration])
+    // sa.setAdditionalProfiles("test")
+    val ctx = sa.run()
+  }
 
   val port = 8080
 

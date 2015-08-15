@@ -23,23 +23,24 @@ dependencyManagement {
 dependencies {
     compile "org.scala-lang:scala-library:2.10.2"
     compile 'com.fasterxml.jackson.module:jackson-module-scala_2.10:2.3.1'
+    compile 'org.apache.commons:commons-io:1.3.2'
 
     compile "org.springframework.boot:spring-boot-starter-web"
-    compile "org.springframework.boot:spring-boot-starter-data-mongodb"
-    compile "org.springframework.boot:spring-boot-starter-amqp"
     compile "org.springframework.boot:spring-boot-starter-actuator"
 
 //    compile 'org.springframework.cloud:spring-cloud-starter-config'
     compile 'org.springframework.cloud:spring-cloud-starter-eureka'
-    compile "io.springfox:springfox-swagger2:2.1.2"
-    compile 'io.springfox:springfox-swagger-ui:2.1.2'
+    compile 'org.webjars:bootstrap:3.1.1'
+    compile 'org.webjars:jquery-validation:1.11.1'
+    compile 'javax.validation:validation-api:1.1.0.Final'
+    compile 'org.hibernate:hibernate-validator:5.0.3.Final'
 
     testCompile "org.springframework.boot:spring-boot-starter-test"
+    testCompile "org.scalatest:scalatest_2.10:2.1.0"
+    testCompile "junit:junit:4.11"
+    testCompile "org.seleniumhq.selenium:selenium-java:2.45.0"
 }
 
-test {
-    forkEvery 1
-}
 
 repositories {
     mavenCentral()
