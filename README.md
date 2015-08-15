@@ -13,6 +13,6 @@ Building and running the microservices
 ===
 
 You can find instructions for building the services in the READMEs.
-Start by [building the RESTful backend service](tree/master/spring-boot-restful-service).
+Start by [building the RESTful backend service](spring-boot-restful-service).
 Once you have build the services, you can launch them by running `docker-compose up -d`.
 
