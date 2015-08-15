@@ -25,12 +25,35 @@ You can then run the service using this command:
 And, send a registration request using:
 
     $ ./register-user.sh
+    
+You can look at the MongoDB database using the following commands
+
+```
+$ ../../mongodb-cli.sh 
+> show dbs;
+local             0.031GB
+mydb              0.031GB
+userregistration  0.031GB
+> use userregistration;
+switched to db userregistration
+> 
+> 
+> show collections;
+registeredUser
+system.indexes
+> 
+> 
+> db.registeredUser.find()
+{ "_id" : ObjectId("55a99b0993860551c6020e9d"), "_class" : "net.chrisrichardson.microservices.restfulspringboot.backend.RegisteredUser", "emailAddress" : "1437178632863-b-foo@bar.com", "password" : "secret" }
+> exit
+$
+```
 
  Next, stop the service running by using:
 
     $ ./stop-service.sh
 
-The next step is to build and test the web application.
+The next step is to [build and test the web application](../spring-boot-webapp).
 
     
 
