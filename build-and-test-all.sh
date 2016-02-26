@@ -2,7 +2,14 @@
 
 set -e
 
-export DOCKER_HOST_IP=$(boot2docker ip)
+if [ -z "$DOCKER_HOST_IP" ] ; then
+  if which docker-machine >/dev/null; then
+    export DOCKER_HOST_IP=$(docker-machine ip default)
+  else
+    export DOCKER_HOST_IP=localhost
+ fi
+ echo set DOCKER_HOST_IP $DOCKER_HOST_IP
+fi
 
 docker-compose up -d --no-recreate rabbitmq mongodb
 
