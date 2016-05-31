@@ -2,6 +2,7 @@ user_registration_url: http://localhost:8081/user
 
 eureka:
   client:
+    registryFetchIntervalSeconds: 5
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
 

@@ -1,0 +1,18 @@
+
+apply plugin: 'scala'
+dependencies {
+    compile "org.scala-lang:scala-library:2.10.2"
+
+    testCompile "junit:junit:4.11"
+    testCompile "org.scalatest:scalatest_2.10:2.1.0"
+    testCompile "org.seleniumhq.selenium:selenium-java:2.45.0"
+}
+
+
+repositories {
+    mavenCentral()
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.11'
+}

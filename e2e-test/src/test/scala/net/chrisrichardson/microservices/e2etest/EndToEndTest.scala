@@ -1,4 +1,16 @@
-package net.chrisrichardson.microservices.restfulspringboot
+package net.chrisrichardson.microservices.e2etest
+
+import org.junit.runner.RunWith
+import org.openqa.selenium.WebDriver
+import org.scalatest.BeforeAndAfterAll
+import org.scalatest.FlatSpec
+import org.scalatest.Matchers._
+import org.scalatest.concurrent.Eventually._
+import org.scalatest.junit.JUnitRunner
+import org.scalatest.selenium.Chrome
+import org.scalatest.selenium.WebBrowser
+import org.scalatest.selenium.WebBrowser.Page
+import org.scalatest.selenium.WebBrowser.go
 
 import org.junit.runner.RunWith
 import org.scalatest.Matchers._
@@ -6,22 +18,17 @@ import org.scalatest.concurrent.Eventually._
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.selenium.Chrome
 import org.scalatest.{BeforeAndAfterAll, FlatSpec}
-import org.springframework.boot.SpringApplication
 
 import scala.concurrent.duration._
 
+
 @RunWith(classOf[JUnitRunner])
-class UserRegistrationWebIntegrationTest extends FlatSpec with Chrome with BeforeAndAfterAll with MyPages {
+class EndToEndTest extends FlatSpec with Chrome with BeforeAndAfterAll with MyPages {
 
-  override def beforeAll {
-    val sa = new SpringApplication(classOf[UserRegistrationTestConfiguration])
-    // sa.setAdditionalProfiles("test")
-    val ctx = sa.run()
-  }
+  val port = "8080"
+  val host = System.getenv("DOCKER_HOST_IP")
 
-  val port = 8080
-
-  val baseUrl = s"http://localhost:${port}/"
+  val baseUrl = s"http://$host:$port/"
 
   def goto(path: String) = go to (baseUrl + path)
 
@@ -95,3 +102,35 @@ class UserRegistrationWebIntegrationTest extends FlatSpec with Chrome with Befor
   }
 
 }
+trait MyPages {
+
+  this: WebBrowser =>
+
+  implicit val webDriver: WebDriver
+
+  class RegistrationPage(baseUrl: String) extends Page {
+
+    val url = baseUrl + "register.html"
+    val title = "Registration"
+
+    def fillAndSubmit(emailAddress: String, password: String) {
+
+      emailField("emailAddress").value = emailAddress
+      pwdField("password").value = password
+      submit()
+    }
+  }
+
+  //  class registrationconfirmationPage(baseUrl: String)(implicit val webDriver: WebDriver) extends WebBrowser.Page with WebBrowser {
+  class RegistrationConfirmationPage(baseUrl: String) extends Page {
+
+    val url = baseUrl + "registrationconfirmation.html"
+
+    val title = "Registration Complete"
+
+    def registeredEmailAddress = find("registeredEmailAddress").get.text
+
+  }
+
+}
+

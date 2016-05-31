@@ -1,4 +1,4 @@
-FROM java:openjdk-8u45-jdk
+FROM java:openjdk-8u91-jdk
 MAINTAINER chris@chrisrichardson.net
 EXPOSE 8080
 CMD java -jar spring-boot-restful-service.jar

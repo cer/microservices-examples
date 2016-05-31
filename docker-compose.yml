@@ -5,7 +5,11 @@ rabbitmq:
     - "15672:15672"
 
 eureka:
-  image: springcloud/eureka
+  image: java:openjdk-8u91-jdk
+  working_dir: /app
+  volumes:
+    - ./eureka-server/build/libs:/app
+  command: java -jar /app/eureka-server.jar --server.port=8761
   ports:
     - "8761:8761"
 
@@ -16,7 +20,7 @@ mongodb:
   command: mongod --smallfiles
 
 restfulservice:
-  image: java:openjdk-8u45-jdk
+  image: java:openjdk-8u91-jdk
   working_dir: /app
   volumes:
     - ./spring-boot-restful-service/build/libs:/app
@@ -35,10 +39,10 @@ restfulservice:
 #    EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE: http://eureka:8761/
 #    EUREKA_INSTANCE_NON_SECURE_PORT: 8080
 #    EUREKA_INSTANCE_NON_SECURE_PORT: 8081
-    EUREKA_INSTANCE_PREFER_IP_ADDRESS: true
+    EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
 
 web:
-  image: java:openjdk-8u45-jdk
+  image: java:openjdk-8u91-jdk
   working_dir: /app
   volumes:
     - ./spring-boot-webapp/build/libs:/app
@@ -53,4 +57,4 @@ web:
 # For some reason this didn't work
 #    EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE: http://eureka:8761/eureka/
 #    EUREKA_INSTANCE_NON_SECURE_PORT: 8080
-    EUREKA_INSTANCE_PREFER_IP_ADDRESS: true
+    EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"

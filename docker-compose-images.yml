@@ -5,7 +5,11 @@ rabbitmq:
     - "15672:15672"
 
 eureka:
-  image: springcloud/eureka
+  image: java:openjdk-8u91-jdk
+  working_dir: /app
+  volumes:
+    - ./eureka-server/build/libs:/app
+  command: java -jar /app/eureka-server.jar --server.port=8761
   ports:
     - "8761:8761"
 
@@ -27,7 +31,9 @@ restfulservice:
     SPRING_DATA_MONGODB_URI: mongodb://mongodb/userregistration
     SPRING_RABBITMQ_HOST: rabbitmq
     SPRING_APPLICATION_NAME: registration-service
-    EUREKA_INSTANCE_PREFER_IP_ADDRESS: true
+    EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
+    SPRING_PROFILES_ACTIVE: enableEureka
+    EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka/
 
 web:
   image: sb_web
@@ -41,4 +47,6 @@ web:
 # For some reason this didn't work
 #    EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE: http://eureka:8761/eureka/
 #    EUREKA_INSTANCE_NON_SECURE_PORT: 8080
-    EUREKA_INSTANCE_PREFER_IP_ADDRESS: true
+    EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
+    EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka/
+    SPRING_PROFILES_ACTIVE: enableEureka

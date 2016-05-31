@@ -30,11 +30,17 @@ class UserRegistrationWebIntegrationTest {
   @Autowired
   var restTemplate: RestTemplate = _
 
+  def makeRegistrationRequest(emailAddress : String, password : String) : RegistrationRequest = {
+    val r = new RegistrationRequest
+    r.emailAddress = emailAddress
+    r.password = password
+    r
+  }
 
   @Test
   def shouldRegisterUser {
     val emailAddress = System.currentTimeMillis() + "-a-foo@bar.com"
-    val request = RegistrationRequest(emailAddress, "secret")
+    val request = makeRegistrationRequest(emailAddress, "secret1234")
     val response = restTemplate.postForEntity("http://localhost:8080/user", request, classOf[RegistrationResponse])
     Assert.assertEquals(HttpStatus.OK, response.getStatusCode)
     eventually {
@@ -61,7 +67,7 @@ class UserRegistrationWebIntegrationTest {
   @Test
   def shouldRejectDuplicateUser {
     val emailAddress = System.currentTimeMillis() + "-b-foo@bar.com"
-    val request = RegistrationRequest(emailAddress, "secret")
+    val request = makeRegistrationRequest(emailAddress, "secret1234")
     val response1 = restTemplate.postForEntity("http://localhost:8080/user", request, classOf[RegistrationResponse])
     Assert.assertEquals(HttpStatus.OK, response1.getStatusCode)
     try {
@@ -69,6 +75,17 @@ class UserRegistrationWebIntegrationTest {
       Assert.fail("expected user registration to fail because of duplicate")
     } catch {
       case e: HttpClientErrorException if e.getStatusCode == HttpStatus.CONFLICT =>
+    }
+  }
+
+  @Test
+  def shouldRejectInvalidRequest{
+    val request = makeRegistrationRequest(null, null)
+    try {
+      restTemplate.postForEntity("http://localhost:8080/user", request, classOf[RegistrationResponse])
+      Assert.fail("expected user registration to fail because of bad request")
+    } catch {
+      case e: HttpClientErrorException if e.getStatusCode == HttpStatus.BAD_REQUEST =>
     }
   }
 

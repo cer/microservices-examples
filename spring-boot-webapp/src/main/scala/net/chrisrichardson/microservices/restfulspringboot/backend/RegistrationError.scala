@@ -1,0 +1,5 @@
+package net.chrisrichardson.microservices.restfulspringboot.backend
+
+trait RegistrationError
+case object DuplicateRegistrationError extends RegistrationError
+
