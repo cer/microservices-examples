@@ -12,4 +12,4 @@ echo ================== Test the services launched with Docker Compose
 
 echo ================== Test the services packaged as Docker images
 
-./run-test-e2e-test-images.sh
+./run-e2e-test-images.sh

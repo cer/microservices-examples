@@ -44,9 +44,6 @@ web:
   environment:
     USER_REGISTRATION_URL: http://REGISTRATION-SERVICE/user
     SPRING_APPLICATION_NAME: registration-web
-# For some reason this didn't work
-#    EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE: http://eureka:8761/eureka/
-#    EUREKA_INSTANCE_NON_SECURE_PORT: 8080
     EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
     EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka/
     SPRING_PROFILES_ACTIVE: enableEureka
