@@ -12,8 +12,9 @@ docker-compose -f docker-compose-images.yml up -d
 #sleep 30
 #echo ... running
 
-./register-user.sh
-
+set +e
+(cd e2e-test ; ./gradlew cleanTest test)
+set -e
 (cd e2e-test ; ./gradlew cleanTest test)
 
 docker-compose stop

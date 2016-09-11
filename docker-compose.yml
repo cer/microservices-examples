@@ -1,5 +1,5 @@
 rabbitmq:
-  image: rabbitmq:3.5.3
+  image: rabbitmq:3.5.3-management
   ports:
     - "5672:5672"
     - "15672:15672"
@@ -12,6 +12,19 @@ eureka:
   command: java -jar /app/eureka-server.jar --server.port=8761
   ports:
     - "8761:8761"
+
+zipkin:
+  image: java:openjdk-8u91-jdk
+  working_dir: /app
+  volumes:
+    - ./zipkin-server/build/libs:/app
+  command: java -jar /app/zipkin-server.jar --server.port=9411
+  links:
+    - rabbitmq
+  ports:
+    - "9411:9411"
+  environment:
+    RABBIT_HOST: rabbitmq
 
 mongodb:
   image: mongo:3.0.4
@@ -38,6 +51,8 @@ restfulservice:
     SPRING_PROFILES_ACTIVE: enableEureka
     EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
     EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka/
+    SPRING_SLEUTH_ENABLED: "true"
+    SPRING_SLEUTH_SAMPLER_PERCENTAGE: 1
 
 web:
   image: java:openjdk-8u91-jdk
@@ -49,9 +64,14 @@ web:
     - "8080:8080"
   links:
     - eureka
+    - rabbitmq
   environment:
     USER_REGISTRATION_URL: http://REGISTRATION-SERVICE/user
     SPRING_APPLICATION_NAME: registration-web
     SPRING_PROFILES_ACTIVE: enableEureka
     EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
     EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka/
+    SPRING_RABBITMQ_HOST: rabbitmq
+    SPRING_SLEUTH_ENABLED: "true"
+    SPRING_SLEUTH_SAMPLER_PERCENTAGE: 1
+    SPRING_SLEUTH_WEB_SKIPPATTERN: "/api-docs.*|/autoconfig|/configprops|/dump|/health|/info|/metrics.*|/mappings|/trace|/swagger.*|.*\\.png|.*\\.css|.*\\.js|/favicon.ico|/hystrix.stream"

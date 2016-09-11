@@ -15,6 +15,9 @@ docker-compose up -d
 
 ./register-user.sh
 
+set +e
+(cd e2e-test ; ./gradlew cleanTest test)
+set -e
 (cd e2e-test ; ./gradlew cleanTest test)
 
 docker-compose stop

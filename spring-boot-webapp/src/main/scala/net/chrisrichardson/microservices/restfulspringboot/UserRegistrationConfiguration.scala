@@ -11,6 +11,8 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient
 import org.springframework.context.annotation._
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
 import org.springframework.web.client.RestTemplate
+import org.springframework.cloud.sleuth.sampler.AlwaysSampler
+import org.springframework.cloud.sleuth.Sampler
 
 import scala.collection.JavaConversions._
 
@@ -32,10 +34,13 @@ class UserRegistrationConfiguration {
     resolver
   }
 
+  @Bean
+  def sampler() : Sampler = new AlwaysSampler()
+  
+
 }
 
 @Configuration
-@EnableEurekaClient
 @Profile(Array("!enableEureka"))
 class NonEurekaClientConfiguration {
 
@@ -71,4 +76,3 @@ class EurekaClientConfiguration {
   @Bean
   def discoveryHealthIndicator(discoveryClient : EurekaClient ) : HealthIndicator = new DiscoveryHealthIndicator(discoveryClient)
 }
-

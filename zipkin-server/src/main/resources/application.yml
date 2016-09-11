@@ -1,0 +1,16 @@
+spring.application.name: zipkin
+
+logging:
+  level.org.springframework.cloud: DEBUG
+
+server:
+  port: 9411
+
+spring:
+  rabbitmq:
+    host: ${RABBIT_HOST:localhost}
+  sleuth:
+    enabled: false
+zipkin:
+  store:
+    type: mem

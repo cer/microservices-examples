@@ -16,7 +16,7 @@ apply plugin: 'spring-boot'
 
 dependencyManagement {
     imports {
-      mavenBom 'org.springframework.cloud:spring-cloud-starter-parent:Brixton.RELEASE'
+      mavenBom 'org.springframework.cloud:spring-cloud-starter-parent:Brixton.SR5'
     }
 }
 
@@ -29,7 +29,12 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-amqp"
     compile "org.springframework.boot:spring-boot-starter-actuator"
 
-//    compile 'org.springframework.cloud:spring-cloud-starter-config'
+    // Spring Cloud Sleuth
+    compile "org.springframework.cloud:spring-cloud-sleuth-stream"
+    compile "org.springframework.cloud:spring-cloud-starter-sleuth"
+    compile "org.springframework.cloud:spring-cloud-stream-binder-rabbit"
+    // Spring Cloud Sleuth
+
     compile 'org.springframework.cloud:spring-cloud-starter-eureka'
     compile "io.springfox:springfox-swagger2:2.1.2"
     compile 'io.springfox:springfox-swagger-ui:2.1.2'

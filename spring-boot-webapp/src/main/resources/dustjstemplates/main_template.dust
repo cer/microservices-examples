@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="webjars/bootstrap/3.1.1/css/bootstrap.css">
     <link rel="stylesheet" href="styles/main.css">
 </head>
-<script src="webjars/jquery/2.1.0/jquery.js"></script>
 <script src="webjars/jquery-validation/1.11.1/jquery.validate.js"></script>
 <body>
 <div class="container-fluid">

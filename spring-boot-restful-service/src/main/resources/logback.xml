@@ -3,5 +3,5 @@
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
     <logger name="org.springframework.web" level="INFO"/>
     <logger name="org.springframework.amqp" level="INFO"/>
-    <logger name="org.springframework.data.mongodb" level="DEBUG"/>
+    <logger name="org.springframework.data.mongodb" level="INFO"/>
 </configuration>

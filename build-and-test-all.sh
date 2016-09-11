@@ -2,15 +2,7 @@
 
 set -e
 
-if [ -z "$DOCKER_HOST_IP" ] ; then
-  if which docker-machine >/dev/null; then
-    export DOCKER_HOST_IP=$(docker-machine ip default)
-  else
-    export DOCKER_HOST_IP=localhost
- fi
- echo set DOCKER_HOST_IP $DOCKER_HOST_IP
-fi
-
+. ./set-env.sh
 docker-compose stop
 docker-compose rm -v --force
 
@@ -19,12 +11,12 @@ docker-compose up -d rabbitmq mongodb
 cd eureka-server
 ./gradlew build
 
+cd ../zipkin-server
+./gradlew build
+
 cd ..
 
 cd spring-boot-restful-service
-
-export SPRING_RABBITMQ_HOST=${DOCKER_HOST_IP?}
-export SPRING_DATA_MONGODB_URI=mongodb://${DOCKER_HOST_IP?}/userregistration
 
 ./gradlew build
 

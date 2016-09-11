@@ -9,6 +9,8 @@ import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient
 import org.springframework.context.annotation._
+import org.springframework.cloud.sleuth.sampler.AlwaysSampler
+import org.springframework.cloud.sleuth.Sampler
 
 @SpringBootApplication
 class UserRegistrationConfiguration {
@@ -31,6 +33,8 @@ class UserRegistrationConfiguration {
   @Bean
   def userRegistrationsExchange() = new TopicExchange(exchangeName)
 
+  @Bean
+  def sampler() : Sampler = new AlwaysSampler()
 
 }
 

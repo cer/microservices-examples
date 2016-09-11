@@ -28,7 +28,14 @@ On Mac OSX you can run `brew install chromedriver`.
 
 ## The quick way
 
-The quickest way to build and run the services on Mac OSX is the script `build-test-and-run-all.sh`.
+The quickest way to build and run the services on Linux/Mac OSX is with the following commands:
+
+```
+. ./set-env.sh
+./gradle-all.sh assemble
+docker-compose up -d
+./show-urls.sh
+```
 
 Otherwise, follow these instructions.
 
@@ -57,6 +64,16 @@ Build the Spring Cloud based Eureka server using the following commands:
 
 ```
 cd eureka-server
+./gradlew build
+```
+
+## Build the Zipkin server
+
+This application uses Zipkin for distributed tracing.
+Build the Zipkin server using the following commands:
+
+```
+cd zipkin-server
 ./gradlew build
 ```
 
@@ -135,10 +152,12 @@ docker-compose up -d web
 
 You can access the web application by visiting the following URL: `http://${DOCKER_HOST_IP?}:8080/register.html`
 
-There are also other URLs that you can visit:
+There are also other URLs that you can visit.
+The following command will wait until the services are available and displays the URLs:
 
-* `http://${DOCKER_HOST_IP?}:8761` - Eureka console
-* `http://${DOCKER_HOST_IP?}:8081/swagger-ui.html` - the Swagger UI
+```
+./show-urls.sh
+```
 
 # Building and running Docker images
 

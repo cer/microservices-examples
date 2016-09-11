@@ -6,6 +6,7 @@ done=false
 host=$1
 shift
 path=$1
+shift
 ports=$*
 
 while [[ "$done" = false ]]; do
@@ -15,6 +16,7 @@ while [[ "$done" = false ]]; do
                         done=true
                 else
                         done=false
+			break
                 fi
         done
         if [[ "$done" = true ]]; then
