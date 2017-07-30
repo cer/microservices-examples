@@ -5,20 +5,12 @@ rabbitmq:
     - "15672:15672"
 
 eureka:
-  image: java:openjdk-8u91-jdk
-  working_dir: /app
-  volumes:
-    - ./eureka-server/build/libs:/app
-  command: java -jar /app/eureka-server.jar --server.port=8761
+  build: ./eureka-server
   ports:
     - "8761:8761"
 
 zipkin:
-  image: java:openjdk-8u91-jdk
-  working_dir: /app
-  volumes:
-    - ./zipkin-server/build/libs:/app
-  command: java -jar /app/zipkin-server.jar --server.port=9411
+  build: ./zipkin-server
   links:
     - rabbitmq
   ports:
@@ -33,11 +25,7 @@ mongodb:
   command: mongod --smallfiles
 
 restfulservice:
-  image: java:openjdk-8u91-jdk
-  working_dir: /app
-  volumes:
-    - ./spring-boot-restful-service/build/libs:/app
-  command: java -jar /app/spring-boot-restful-service.jar
+  build: ./spring-boot-restful-service
   ports:
     - "8081:8080"
   links:
@@ -55,11 +43,7 @@ restfulservice:
     SPRING_SLEUTH_SAMPLER_PERCENTAGE: 1
 
 web:
-  image: java:openjdk-8u91-jdk
-  working_dir: /app
-  volumes:
-    - ./spring-boot-webapp/build/libs:/app
-  command: java -jar /app/spring-boot-webapp.jar
+  build: ./spring-boot-webapp
   ports:
     - "8080:8080"
   links:

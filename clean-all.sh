@@ -4,8 +4,8 @@ set -e
 
 cd spring-boot-restful-service
 
-./build-docker.sh
+./gradlew clean
 
 cd ../spring-boot-webapp
 
-./build-docker.sh
+./gradlew clean
