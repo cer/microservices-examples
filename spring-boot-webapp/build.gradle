@@ -37,6 +37,7 @@ dependencies {
 
     compile 'org.springframework.cloud:spring-cloud-starter-eureka'
     compile 'org.springframework.cloud:spring-cloud-starter-hystrix'
+    compile 'org.springframework.boot:spring-boot-starter-actuator'
     compile 'org.webjars:bootstrap:3.1.1'
     compile 'org.webjars:jquery-validation:1.11.1'
     compile 'javax.validation:validation-api:1.1.0.Final'

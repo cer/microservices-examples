@@ -59,3 +59,10 @@ web:
     SPRING_SLEUTH_ENABLED: "true"
     SPRING_SLEUTH_SAMPLER_PERCENTAGE: 1
     SPRING_SLEUTH_WEB_SKIPPATTERN: "/api-docs.*|/autoconfig|/configprops|/dump|/health|/info|/metrics.*|/mappings|/trace|/swagger.*|.*\\.png|.*\\.css|.*\\.js|/favicon.ico|/hystrix.stream"
+
+hystrix:
+  build: ./hystrix-dashboard
+  ports:
+    - "8082:8080"
+  links:
+    - web

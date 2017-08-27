@@ -77,6 +77,16 @@ cd zipkin-server
 ./gradlew build
 ```
 
+## Build the Hystrix dashboard
+
+This application uses Netflix OSS Hystrix for monitoring circuit-breaker metrics.
+Build the Spring Cloud based Hystrix dashboard using the following commands:
+
+```
+cd hystrix-dashboard
+./gradlew build
+```
+
 ## Building the RESTful service
 
 Use the following commands to build the RESTful service:
