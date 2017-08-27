@@ -1,0 +1,8 @@
+spring.application.name: hystrix-dashboard
+
+logging:
+  level.org.springframework.cloud: DEBUG
+
+spring:
+  sleuth:
+    enabled: false

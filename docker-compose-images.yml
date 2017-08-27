@@ -52,3 +52,10 @@ web:
     EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
     EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka/
     SPRING_PROFILES_ACTIVE: enableEureka
+
+hystrix:
+  build: ./hystrix-dashboard
+  ports:
+    - "8082:8080"
+  links:
+    - web

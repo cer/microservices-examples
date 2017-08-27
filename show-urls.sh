@@ -9,3 +9,4 @@ echo http://${DOCKER_HOST_IP?}:8761 - Eureka console
 echo http://${DOCKER_HOST_IP?}:8081/swagger-ui.html - the Backend Swagger UI
 echo http://${DOCKER_HOST_IP?}:9411 - Zipkin
 echo http://${DOCKER_HOST_IP?}:15672 - RabbitMQ admin - guest/guest login
+echo http://${DOCKER_HOST_IP?}:8082/hystrix - Hystrix dashboard - monitor http://web:8080/hystrix.stream
