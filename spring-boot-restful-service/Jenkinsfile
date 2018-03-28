@@ -13,7 +13,7 @@ pipeline {
             steps {
                 sh 'echo "checking out scm"'
                 checkout scm
-                sh './spring-boot-restful-service/gradlew build'
+                sh './set-env.sh'
             }
         }
 
