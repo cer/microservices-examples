@@ -13,22 +13,20 @@ pipeline {
             steps {
                 sh 'echo "checking out scm"'
                 checkout scm
-                sh 'ls'
+                sh './spring-boot-restful-service/gradlew build'
             }
         }
 
         stage("Test") {
             steps {
                sh 'echo "hello testing"'
-               sh 'echo "hello testing"'
-               sh 'echo "hello instance"'
             }
         }
 
-        stage("Copy Artifacts"){
-            steps {
-                 archiveArtifacts artifacts:'*,*/,*/*', fingerprint:true
-            }
-        }
+        // stage("Copy Artifacts"){
+        //     steps {
+        //          archiveArtifacts artifacts:'*,*/,*/*', fingerprint:true
+        //     }
+        // }
     }
 }
