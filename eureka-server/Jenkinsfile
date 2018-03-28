@@ -1,0 +1,31 @@
+#!/usr/bin/env groovy
+pipeline {
+      agent {
+        docker {
+            image 'gidraff/ms-image'
+            args '-u root:root'
+        }
+      }
+
+    stages {
+       
+        stage("Build") {
+            steps {
+                sh 'echo "checking out scm"'
+                checkout scm
+            }
+        }
+
+        stage("Test") {
+            steps {
+               sh 'echo "hello testing"'
+            }
+        }
+
+        stage("Copy Artifacts"){
+            steps {
+                 archiveArtifacts artifacts:'*,*/,*/*', fingerprint:true
+            }
+        }
+    }
+}
