@@ -13,6 +13,7 @@ pipeline {
             steps {
                 sh 'echo "checking out scm"'
                 checkout scm
+                sh 'ls'
             }
         }
 
