@@ -13,8 +13,10 @@ while [[ "$done" = false ]]; do
         for port in $ports; do
                 curl -q http://${host}:${port}${path} >& /dev/null
                 if [[ "$?" -eq "0" ]]; then
+                        echo "this happened"
                         done=true
                 else
+                        echo 'this other loop happened'
                         done=false
 			break
                 fi
