@@ -1,54 +1,59 @@
-rabbitmq:
-  image: rabbitmq:3.5.3-management
-  ports:
-    - "5672:5672"
-    - "15672:15672"
+version: '3'
+services:
 
-eureka:
-  build: ./eureka-server
-  ports:
-    - "8761:8761"
+  rabbitmq:
+    image: rabbitmq:3.5.3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
 
-zipkin:
-  build: ./zipkin-server
-  links:
-    - rabbitmq
-  ports:
-    - "9411:9411"
-  environment:
-    RABBIT_HOST: rabbitmq
+  eureka:
+    build: ./eureka-server
+    ports:
+      - "8761:8761"
 
-mongodb:
-  image: mongo:3.0.4
-  ports:
-    - "27017:27017"
-  command: mongod --smallfiles
+  zipkin:
+    build: ./zipkin-server
+    ports:
+      - "9411:9411"
+    depends_on:
+      - rabbitmq
+    environment:
+      RABBIT_HOST: rabbitmq
 
-restfulservice:
-  image: sb_rest_svc
-  ports:
-    - "8081:8080"
-  links:
-    - rabbitmq
-    - mongodb
-    - eureka
-  environment:
-    SPRING_DATA_MONGODB_URI: mongodb://mongodb/userregistration
-    SPRING_RABBITMQ_HOST: rabbitmq
-    SPRING_APPLICATION_NAME: registration-service
-    EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
-    SPRING_PROFILES_ACTIVE: enableEureka
-    EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka/
+  mongodb:
+    image: mongo:3.0.4
+    ports:
+      - "27017:27017"
+    command: mongod --smallfiles
 
-web:
-  image: sb_web
-  ports:
-    - "8080:8080"
-  links:
-    - eureka
-  environment:
-    USER_REGISTRATION_URL: http://REGISTRATION-SERVICE/user
-    SPRING_APPLICATION_NAME: registration-web
-    EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
-    EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka/
-    SPRING_PROFILES_ACTIVE: enableEureka
+  restfulservice:
+    image: spring-boot-restful-service
+    ports:
+      - "8081:8080"
+    depends_on:
+      - rabbitmq
+      - mongodb
+      - eureka
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://mongodb/userregistration
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_APPLICATION_NAME: registration-service
+      EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
+      SPRING_PROFILES_ACTIVE: enableEureka
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka/
+
+  web:
+    image: spring-boot-webapp
+    ports:
+      - "8080:8080"
+    depends_on:
+      - rabbitmq
+      - mongodb
+      - eureka
+    environment:
+      USER_REGISTRATION_URL: http://REGISTRATION-SERVICE/user
+      SPRING_APPLICATION_NAME: registration-web
+      EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka/
+      SPRING_PROFILES_ACTIVE: enableEureka

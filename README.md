@@ -23,7 +23,7 @@ This project uses with [Docker Compose](https://docs.docker.com/compose/) to run
 
 The `spring-boot-webapp` project uses Selenium to test the web UI using the Chrome browser.
 You will need to install [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/getting-started).
-On Mac OSX you can run `brew install chromedriver`.
+On Mac OSX you can run ` brew cask install chromedriver`.
 
 
 ## The quick way
